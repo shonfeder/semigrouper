@@ -23,8 +23,12 @@ jobs:
       - restore_cache:
           key: sbt-cache
       - run:
-          name: Compile samplescala dist package
-          command: cat /dev/null | sbt clean update dist
+          name: Compile semigrouper package
+          command: cat /dev/null | sbt clean coverage compile
+      - run:
+          name: Upload test coverage info
+          command: bash <(curl -s https://codecov.io/bash)
+          when: on_success
       - save_cache:
           key: sbt-cache
           paths:
